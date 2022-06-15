@@ -10,11 +10,6 @@ class Post(models.Model):
     class Meta:
         ordering = ['created']
 
-    objects = models.Manager()
-
-    # def __str__(self):
-    #     return self.owner
-
 
 class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -29,12 +24,9 @@ class Comment(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField()
-    owner = models.ForeignKey('auth.user', related_name='category', on_delete=models.CASCADE)
-    port = models.ForeignKey('Post', related_name='category', on_delete=models.CASCADE)
+    name = models.CharField(max_length=100, blank=False, default='')
+    owner = models.ForeignKey('auth.user', related_name='categories', on_delete=models.CASCADE)
+    posts = models.ManyToManyField('Post', related_name='categories', blank=True)
 
     class Meta:
         verbose_name_plural = 'categories'
-
-    objects = models.Manager()
