@@ -22,16 +22,19 @@ class Comment(models.Model):
     owner = models.ForeignKey('auth.user', related_name='comments', on_delete=models.CASCADE)
     post = models.ForeignKey('Post', related_name='comments', on_delete=models.CASCADE)
 
-    class Meta():
-        ordering =['created']
+    class Meta:
+        ordering = ['created']
+
+    objects = models.Manager()
 
 
 class Category(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField()
-    owner = models.ForeignKey('auth.user', related_name='comments', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.user', related_name='category', on_delete=models.CASCADE)
     port = models.ForeignKey('Post', related_name='category', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'categories'
-# Create your models here.
+
+    objects = models.Manager()

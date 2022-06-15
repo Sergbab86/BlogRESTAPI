@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
 from . import serializers
 from django.contrib.auth.models import User
-from .models import Post, Comment
+from .models import Post, Comment, Category
 # from .serializers import PostSerializer
 from .permissions import IsOwnerOrReadOnly
 
@@ -50,4 +50,7 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.CommentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
-# Create your views here.
+
+
+class CategoryList(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
